@@ -13,7 +13,9 @@
     </select>
 
     <hr>
-    <component :is="selectedComponent"></component>
+    <keep-alive>
+      <component :is="selectedComponent"></component>
+    </keep-alive>
   </section>
 </template>
 
