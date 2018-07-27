@@ -1,21 +1,13 @@
 <template>
   <section class="playground">
     <h1>Welcome to the component playground!</h1>
-
-    <select v-model="selectedComponent">
-      <option
-        v-for="(item, index) in componentList"
-        :key="index"
-        :value="item.component"
-      >
-        {{ item.label }}
-      </option>
-    </select>
-
+    <button v-on:click="addActiveComponent">Add a new component</button>
     <hr>
-    <keep-alive>
-      <component :is="selectedComponent"></component>
-    </keep-alive>
+    <div class="test" v-for="(item, index) in activeComponents" :key="index">
+      <keep-alive>
+        <component :is="item.component"></component>
+      </keep-alive>
+    </div>
   </section>
 </template>
 
@@ -38,7 +30,20 @@ export default {
           component: () => import('@/components/dynamic/TextInput')
         }
       ],
-      selectedComponent: null
+      numberOfComponents: 0,
+      activeComponents: []
+    }
+  },
+
+  methods: {
+    addActiveComponent: function (event) {
+      if (event) {
+        if (this.numberOfComponents < this.componentList.length) {
+          this.activeComponents.push(this.componentList[this.numberOfComponents])
+          this.numberOfComponents += 1
+          console.log('Component added')
+        }
+      }
     }
   }
 }
